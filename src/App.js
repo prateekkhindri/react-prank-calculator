@@ -4,6 +4,8 @@ import { Buttons } from "./components/Buttons";
 import { Display } from "./components/Display";
 import { Title } from "./components/Title";
 
+const operators = ["+", "-", "/", "*"];
+
 const App = () => {
   const [textToDisplay, setTextToDisplay] = useState("");
 
@@ -28,7 +30,14 @@ const App = () => {
 
   // 2. Total calculation
   const onTotal = () => {
-    const str = textToDisplay;
+    let str = textToDisplay;
+
+    // 5. If the last character is an operator and we click "=", we slice the operator
+    const lastChar = str.slice(-1);
+
+    if (operators.includes(lastChar)) {
+      str = str.slice(0, -1);
+    }
     const ttl = eval(str);
     setTextToDisplay(ttl);
   };
