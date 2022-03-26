@@ -13,6 +13,28 @@ const App = () => {
   const [lastOperator, setLastOperator] = useState("");
 
   const handleOnClick = (val) => {
+    // 8. Allow 0 to be entered before "." only and not in succession and also being able to calculate the total
+    if (operators.includes(val) || val === "=") {
+      const lastOperatorIndex = lastOperator
+        ? textToDisplay.lastIndexOf(lastOperator) + 1
+        : 0;
+
+      const firstNumberSet = textToDisplay.substring(0, lastOperatorIndex);
+
+      const lastNumberSet = textToDisplay.slice(lastOperatorIndex);
+
+      const str = firstNumberSet + parseFloat(lastNumberSet); // Octal  case
+
+      if (val === "=") {
+        return onTotal(str);
+      }
+
+      setTextToDisplay(str + val);
+
+      setLastOperator(val);
+      return;
+    }
+
     // 7. Not being able to use "." more than once
     if (operators.includes(val)) {
       setLastOperator(val);
@@ -31,8 +53,6 @@ const App = () => {
       if (lastNumberSet.includes(".")) {
         return;
       }
-
-      //
 
       //   if (lastOperator) {
       //     const lastOperatorIndex = textToDisplay.lastIndexOf(lastOperator);
@@ -77,8 +97,8 @@ const App = () => {
   };
 
   // 2. Total calculation
-  const onTotal = () => {
-    let str = textToDisplay;
+  const onTotal = (str) => {
+    // let str = textToDisplay;
 
     // 5. If the last character is an operator and we click "=", we slice the operator
     const lastChar = str.slice(-1);
