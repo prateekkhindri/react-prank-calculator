@@ -9,7 +9,45 @@ const operators = ["+", "-", "/", "*"];
 const App = () => {
   const [textToDisplay, setTextToDisplay] = useState("");
 
+  // 7. Not being able to use "." more than once
+  const [lastOperator, setLastOperator] = useState("");
+
   const handleOnClick = (val) => {
+    // 7. Not being able to use "." more than once
+    if (operators.includes(val)) {
+      setLastOperator(val);
+    }
+
+    // 7. Not being able to use "." more than once
+    // We need to have only one "." per number set
+    if (val === ".") {
+      // 7.1 We need the index of the last operator or 0
+      const lastOperatorIndex = lastOperator
+        ? textToDisplay.lastIndexOf(lastOperator) + 1
+        : 0;
+
+      const lastNumberSet = textToDisplay.slice(lastOperatorIndex);
+
+      if (lastNumberSet.includes(".")) {
+        return;
+      }
+
+      //
+
+      //   if (lastOperator) {
+      //     const lastOperatorIndex = textToDisplay.lastIndexOf(lastOperator);
+      //     const lastNumberSet = textToDisplay.slice(lastOperatorIndex + 1);
+
+      //     if (lastNumberSet.includes(".")) {
+      //       return;
+      //     }
+      //   } else {
+      //     if (textToDisplay.includes(".")) {
+      //       return;
+      //     }
+      //   }
+    }
+
     // 2. Total calculation
     if (val === "=") {
       return onTotal();
