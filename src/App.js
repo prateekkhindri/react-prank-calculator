@@ -25,6 +25,16 @@ const App = () => {
       return setTextToDisplay(str);
     }
 
+    // 6. Not allowing to use an operator more than once
+    if (operators.includes(val)) {
+      const lastChar = textToDisplay.slice(-1);
+
+      if (operators.includes(lastChar)) {
+        const str = textToDisplay.slice(0, -1) + val;
+        return setTextToDisplay(str);
+      }
+    }
+
     setTextToDisplay(textToDisplay + val);
   };
 
@@ -39,7 +49,7 @@ const App = () => {
       str = str.slice(0, -1);
     }
     const ttl = eval(str);
-    setTextToDisplay(ttl);
+    setTextToDisplay(ttl.toString());
   };
 
   return (
