@@ -13,7 +13,7 @@ const App = () => {
   const [lastOperator, setLastOperator] = useState("");
 
   const handleOnClick = (val) => {
-    // 8. Allow 0 to be entered before "." only and not in succession and also being able to calculate the total
+    // 8. If 0 is entered before a number and an operator is clicked, omit the 0 so that eval can calculate
     if (operators.includes(val) || val === "=") {
       const lastOperatorIndex = lastOperator
         ? textToDisplay.lastIndexOf(lastOperator) + 1
@@ -25,8 +25,10 @@ const App = () => {
 
       const str = firstNumberSet + parseFloat(lastNumberSet); // Octal  case
 
+      // 2. Total calculation
+
       if (val === "=") {
-        return onTotal(str);
+        return onTotal();
       }
 
       setTextToDisplay(str + val);
@@ -68,10 +70,9 @@ const App = () => {
       //   }
     }
 
-    // 2. Total calculation
-    if (val === "=") {
-      return onTotal();
-    }
+    // if (val === "=") {
+    //   return onTotal();
+    // }
 
     // 3. Making the AC button functional
     if (val === "AC") {
@@ -97,8 +98,8 @@ const App = () => {
   };
 
   // 2. Total calculation
-  const onTotal = (str) => {
-    // let str = textToDisplay;
+  const onTotal = () => {
+    let str = textToDisplay;
 
     // 5. If the last character is an operator and we click "=", we slice the operator
     const lastChar = str.slice(-1);
